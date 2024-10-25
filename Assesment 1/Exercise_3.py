@@ -1,22 +1,21 @@
 import tkinter as tk
 from tkinter import *
-from tkinter import ttk
 
-# Create the main Tkinter root
-root = tk.Tk()
+# create tkinter root
+root = Tk()
 root.title("Student Manager")
 
-# Set the background color of the root window
+# sets the background color of the root window
 root.configure(bg='black')
 
-# FUNCTIONSS
-# Read and parse the data from studentMarks.txt
+#FUNCTIONSS
+# reads and parse the data from studentMarks.txt
 def load_student_data():
     # Open the studentMarks.txt file for reading
-    with open("Assets/studentMarks.txt", "r") as file:
-        students = []  # Create an empty list to store student data
+    with open("Assesment 1\Assets\studentMarks.txt", "r") as file:
+        students = []  #create an empty list to store student data
         
-        # Read the number of students from the first line
+        #readss the number of students from the first line
         num_students = int(file.readline().strip())
         
         # Loop through each line in the file to read student records
@@ -30,15 +29,15 @@ def load_student_data():
             
             # Calculate the total coursework score
             coursework_total = sum(coursework_marks)
-            exam_mark = int(parts[5])  # Convert the exam mark to an integer
+            exam_mark = int(parts[5])  # Converts the exam mark to an integer
             
-            # Calculate overall percentage
+            #overall percentage
             overall_percentage = ((coursework_total + exam_mark) / 160) * 100
             
-            # Determine the grade based on the percentage
+            # gives the grade based on percentage
             grade = student_score_level(overall_percentage)
             
-            # Create a simple dictionary for the student record
+            # dictuionary for the record
             student_record = {
                 "number": student_number,
                 "name": student_name,
@@ -48,11 +47,12 @@ def load_student_data():
                 "grade": grade
             }
             
-            # Add the student record to the list of students
+            # adds the information of student record to a list
             students.append(student_record)  
             
     return students  # Return the list of student records
 
+# function to calculate the grade
 def student_score_level(percentage):
     if percentage >= 70:
         return 'A'
@@ -67,6 +67,8 @@ def student_score_level(percentage):
 
 def view_all_students():
     output = ""
+    
+    # loops through tge list of students to format their details
     for student in students:
         output += (
             f"Name: {student['name']}\n"
@@ -78,10 +80,14 @@ def view_all_students():
         )
     display_output(output)
 
-def view_individual_student():
+def view_student():
+    #gets the student name from dropdown
     selected = student_var.get()
+
+    # loop through klist to find name
     for student in students:
         if student['name'] == selected:
+            # Format the student's details into a string
             output = (
                 f"Name: {student['name']}\n"
                 f"Number: {student['number']}\n"
@@ -90,18 +96,21 @@ def view_individual_student():
                 f"Overall Percentage: {student['percentage']:.2f}%\n"
                 f"Grade: {student['grade']}\n"
             )
+            # then displays the records od that student
             display_output(output)
             return
 
+
 def show_highest_score():
-    top_student = max(students, key=lambda s: s['percentage'])
-    display_student_info(top_student)
+    # lamba looks at each student in the students list and uses the value percentage to compare
+    top_student = max(students, key=lambda s: s['percentage']) #here it looks at the biggest prercentage and displyas the top student
+    display_record(top_student)
 
 def show_lowest_score():
-    low_student = min(students, key=lambda s: s['percentage'])
-    display_student_info(low_student)
+    low_student = min(students, key=lambda s: s['percentage']) # same as the other one but this one displays the low student
+    display_record(low_student)
 
-def display_student_info(student):
+def display_record(student):
     output = (
         f"Name: {student['name']}\n"
         f"Number: {student['number']}\n"
@@ -113,48 +122,53 @@ def display_student_info(student):
     display_output(output)
 
 def display_output(output):
-    text_area.config(state=tk.NORMAL)
-    text_area.delete(1.0, tk.END)
-    text_area.insert(tk.END, output)
-    text_area.config(state=tk.DISABLED)
+    # enebles the editing
+    text_area.config(state=NORMAL)
+    #deletes any content if theres any
+    text_area.delete(1.0, END)
+    # inserts a new output
+    text_area.insert(END, output)
+    # disable the editing
+    text_area.config(state=DISABLED)
 
 # TKINTERR
 
-# Load student data from the file
+# made a variable to load the data
 students = load_student_data()
 
-# Title Label
-title_label = tk.Label(root, text="Student Manager", font=("Arial", 16, "bold"), bg='black', fg='green')
+# title
+title_label = Label(root, text="Student Manager", font=("Arial", 16, "bold"), bg='black', fg='green')
 title_label.grid(row=0, column=0, columnspan=3, pady=10)
 
-# Buttons for different functionalities
-btn_view_all = tk.Button(root, text="View All Student Records", command=view_all_students, bg='black', fg='green')
+# buttons for different functionalities
+btn_view_all = Button(root, text="View All Student Records", command= view_all_students, bg='black', fg='green')
 btn_view_all.grid(row=1, column=0, padx=10, pady=5)
 
-btn_highest = tk.Button(root, text="Show Highest Score", command=show_highest_score, bg='black', fg='green')
+btn_highest = Button(root, text="Show Highest Score", command= show_highest_score, bg='black', fg='green')
 btn_highest.grid(row=1, column=1, padx=10, pady=5)
 
-btn_lowest = tk.Button(root, text="Show Lowest Score", command=show_lowest_score, bg='black', fg='green')
+btn_lowest = Button(root, text="Show Lowest Score", command= show_lowest_score, bg='black', fg='green')
 btn_lowest.grid(row=1, column=2, padx=10, pady=5)
 
-# Frame to hold the OptionMenu with a green border
+# a frame to hold the names of students to choose 
 frame = Frame(root, bg='green')
 frame.grid(row=2, column=0, padx=10, pady=5)
 
 # Variable to hold the selected student name
 student_var = StringVar()
 
-# OptionMenu to select individual student
+# Drop down for selecting the students
 student_menu = OptionMenu(frame, student_var, *[s['name'] for s in students])
 student_menu.config(bg='black', fg='green', activebackground='green', activeforeground='black', borderwidth=0, highlightbackground= 'green')
-student_menu["menu"].config(bg='black', fg='green')
+student_menu["menu"].config(bg='black', fg='green') #for changing the color of the box
 student_menu.pack()
 
-btn_view_individual = tk.Button(root, text="View Record", command=view_individual_student, bg='black', fg='green')
-btn_view_individual.grid(row=2, column=1, padx=10, pady=5)
+# view student btn
+student_vuew_button = Button(root, text="View Record", command= view_student, bg='black', fg='green')
+student_vuew_button.grid(row=2, column=1, padx=10, pady=5)
 
-# Text area to display the output
-text_area = tk.Text(root, height=15, width=60, bg='black', fg='green', borderwidth=2, relief='solid')
+# text area for the outputt
+text_area = Text(root, height=15, width=60, bg='black', fg='green', borderwidth=2, relief='solid')
 text_area.grid(row=3, column=0, columnspan=3, padx=10, pady=10)
 
 root.mainloop()

@@ -68,7 +68,7 @@ def main():
 
     while True:
         user_input = input("Type 'Alexa tell me a Joke': \n").strip().lower()
-        # Check if input is empty (pressing Enter) or contains the word 'alexa'
+        # checks if input is empty (pressing Enter) or contains the word 'alexa'
         if user_input == "" or "alexa" in user_input:
             tell_joke(jokes)  # Display a joke
 
