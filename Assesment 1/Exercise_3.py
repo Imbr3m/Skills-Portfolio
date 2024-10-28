@@ -87,7 +87,7 @@ def view_student():
     # loop through klist to find name
     for student in students:
         if student['name'] == selected:
-            # Format the student's details into a string
+            # formats the student's details into a string
             output = (
                 f"Name: {student['name']}\n"
                 f"Number: {student['number']}\n"
