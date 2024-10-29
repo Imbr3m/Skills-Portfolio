@@ -18,16 +18,16 @@ def load_student_data():
         #readss the number of students from the first line
         num_students = int(file.readline().strip())
         
-        # Loop through each line in the file to read student records
+        # Loops through each line in the file to read student records
         for line in file:
-            parts = line.strip().split(',')  # Split the line by commas
+            parts = line.strip().split(',')  # splits by commas
             
             # Extract student information from parts
-            student_number = int(parts[0])  # Convert the first part to an integer
-            student_name = parts[1]          # Second part is the name
-            coursework_marks = list(map(int, parts[2:5]))  # Convert coursework marks to integers
+            student_number = int(parts[0])  # cconverts the first part to an integer
+            student_name = parts[1]          #second part is the name
+            coursework_marks = list(map(int, parts[2:5]))  # convert again to int
             
-            # Calculate the total coursework score
+            # calculate the total courseworrk score
             coursework_total = sum(coursework_marks)
             exam_mark = int(parts[5])  # Converts the exam mark to an integer
             
@@ -137,17 +137,17 @@ def display_output(output):
 students = load_student_data()
 
 # title
-title_label = Label(root, text="Student Manager", font=("Arial", 16, "bold"), bg='black', fg='green')
+title_label = Label(root, text="Student Manager", font=("Arial", 16,"bold"),bg='black', fg='green')
 title_label.grid(row=0, column=0, columnspan=3, pady=10)
 
 # buttons for different functionalities
-btn_view_all = Button(root, text="View All Student Records", command= view_all_students, bg='black', fg='green')
+btn_view_all = Button(root, text="View All Student Records",command= view_all_students, bg='black',fg='green')
 btn_view_all.grid(row=1, column=0, padx=10, pady=5)
 
-btn_highest = Button(root, text="Show Highest Score", command= show_highest_score, bg='black', fg='green')
+btn_highest = Button(root, text="Show Highest Score", command= show_highest_score, bg='black',fg='green')
 btn_highest.grid(row=1, column=1, padx=10, pady=5)
 
-btn_lowest = Button(root, text="Show Lowest Score", command= show_lowest_score, bg='black', fg='green')
+btn_lowest = Button(root, text="Show Lowest Score",command= show_lowest_score,bg='black',fg='green')
 btn_lowest.grid(row=1, column=2, padx=10, pady=5)
 
 # a frame to hold the names of students to choose 
@@ -164,8 +164,8 @@ student_menu["menu"].config(bg='black', fg='green') #for changing the color of t
 student_menu.pack()
 
 # view student btn
-student_vuew_button = Button(root, text="View Record", command= view_student, bg='black', fg='green')
-student_vuew_button.grid(row=2, column=1, padx=10, pady=5)
+student_view_button = Button(root, text="View Record", command= view_student, bg='black', fg='green')
+student_view_button.grid(row=2, column=1, padx=10, pady=5)
 
 # text area for the outputt
 text_area = Text(root, height=15, width=60, bg='black', fg='green', borderwidth=2, relief='solid')
